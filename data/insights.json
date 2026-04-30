@@ -1,0 +1,482 @@
+[
+  {
+    "domain": "ai",
+    "topic": "deep-learning",
+    "type": "counterintuitive_truth",
+    "hook": "Bigger is not always better \u2014 and can be worse",
+    "insight": "Overparameterized neural networks often generalize better than smaller ones, contradicting classical bias-variance tradeoff intuition. The double descent curve shows test error can decrease even after the model has enough parameters to memorize the training data.",
+    "why_it_matters": "Understanding double descent prevents you from prematurely shrinking models to avoid overfitting, which can actually hurt generalization."
+  },
+  {
+    "domain": "ai",
+    "topic": "deep-learning",
+    "type": "surprising_fact",
+    "hook": "Most neurons in your network are disposable",
+    "insight": "Pruning studies show you can remove 90%+ of weights from trained neural networks with minimal accuracy loss. Many neurons are redundant or never activate meaningfully during inference.",
+    "why_it_matters": "Model compression through pruning can dramatically reduce inference cost and deployment footprint without retraining from scratch."
+  },
+  {
+    "domain": "ai",
+    "topic": "deep-learning",
+    "type": "misconception",
+    "hook": "Vanishing gradients are not the real problem",
+    "insight": "People blame vanishing gradients for training failures in deep nets, but the real culprit is often poor initialization or unstable activations in specific layers. ResNets solve the degradation problem, which is distinct from gradient vanishing.",
+    "why_it_matters": "Misdiagnosing training issues leads to wrong fixes. Understanding the actual bottleneck \u2014 initialization, architecture, or optimization \u2014 saves debugging time."
+  },
+  {
+    "domain": "ai",
+    "topic": "deep-learning",
+    "type": "expert_heuristic",
+    "hook": "Batch size is a hyperparameter, not a free lunch",
+    "insight": "Large batch sizes speed up wall-clock training but often reach worse generalization minima. The generalization gap is real \u2014 smaller batches add gradient noise that acts as implicit regularization.",
+    "why_it_matters": "Choosing batch size involves a tradeoff between training speed and final model quality. Do not just max it out to fill GPU memory."
+  },
+  {
+    "domain": "ai",
+    "topic": "deep-learning",
+    "type": "underrated_concept",
+    "hook": "Label smoothing does more than prevent overconfidence",
+    "insight": "Label smoothing does not just regularize \u2014 it explicitly encodes the idea that training data has noise. It improves calibration, makes confidence scores more meaningful, and boosts distillation effectiveness.",
+    "why_it_matters": "If you are doing knowledge distillation or need well-calibrated probabilities (medical, safety-critical), label smoothing should be default, not optional."
+  },
+  {
+    "domain": "ai",
+    "topic": "llm-engineering",
+    "type": "counterintuitive_truth",
+    "hook": "More parameters do not mean more capability",
+    "insight": "A 7B model with high-quality curated training data and good post-training alignment often outperforms a 70B model trained on noisy web dumps. Data quality and curation dominate raw parameter count.",
+    "why_it_matters": "Chasing parameter count is wasteful. Investing in data quality, deduplication, and curation gives better ROI than scaling compute."
+  },
+  {
+    "domain": "ai",
+    "topic": "llm-engineering",
+    "type": "surprising_fact",
+    "hook": "Your prompt is worth more than you think",
+    "insight": "Prompt engineering can yield 20-50% performance swings on the same model. Structured prompts with clear delimiters, few-shot examples, and chain-of-thought often beat fine-tuning for specific tasks.",
+    "why_it_matters": "Before investing in fine-tuning infrastructure, exhaust prompt engineering. It is faster, cheaper, and often sufficient."
+  },
+  {
+    "domain": "ai",
+    "topic": "llm-engineering",
+    "type": "misconception",
+    "hook": "RLHF does not make models smarter",
+    "insight": "RLHF aligns models to human preferences \u2014 it does not add knowledge. In fact, it often reduces the model raw capability (alignment tax). The aligned model answers more helpfully but may lose edge-case accuracy.",
+    "why_it_matters": "Do not expect RLHF to fix a model that does not know the answer. Alignment and capability are orthogonal \u2014 invest in pretraining quality first."
+  },
+  {
+    "domain": "ai",
+    "topic": "llm-engineering",
+    "type": "expert_heuristic",
+    "hook": "Context window size is a budget, not a suggestion",
+    "insight": "LLMs exhibit lost-in-the-middle \u2014 they attend less to information in the middle of long contexts. Put critical instructions and key data at the beginning or end of your prompt for best retrieval.",
+    "why_it_matters": "Stuffing a context window without strategy wastes tokens. Strategic placement of information dramatically affects retrieval and reasoning quality."
+  },
+  {
+    "domain": "ai",
+    "topic": "llm-engineering",
+    "type": "underrated_concept",
+    "hook": "KV cache is the hidden bottleneck of LLM serving",
+    "insight": "In autoregressive generation, the KV cache grows linearly with sequence length and is the dominant memory cost. Techniques like GQA, MQA, and cache quantization often matter more than model compression.",
+    "why_it_matters": "If your inference server is OOMing, the fix is not a smaller model \u2014 it is KV cache optimization. Understanding this unlocks serving longer contexts efficiently."
+  },
+  {
+    "domain": "ai",
+    "topic": "computer-vision",
+    "type": "counterintuitive_truth",
+    "hook": "ConvNets are not dead \u2014 they are just underhyped",
+    "insight": "ConvNeXt matches or exceeds ViT accuracy with comparable compute, yet gets a fraction of the attention. Pure convolutional architectures are still competitive and often deploy more efficiently on edge.",
+    "why_it_matters": "Do not default to Vision Transformers. For latency-sensitive or edge deployment, modern ConvNets can be the better choice with simpler optimization paths."
+  },
+  {
+    "domain": "ai",
+    "topic": "computer-vision",
+    "type": "surprising_fact",
+    "hook": "ImageNet models are biased toward texture, not shape",
+    "insight": "Standard CNNs trained on ImageNet rely heavily on texture cues rather than object shape \u2014 opposite to human vision. This makes them fragile to style changes, adversarial perturbations, and domain shifts.",
+    "why_it_matters": "If your application needs robustness to visual variation (different lighting, styles, renderings), shape-biased training or augmentation strategies are essential."
+  },
+  {
+    "domain": "ai",
+    "topic": "computer-vision",
+    "type": "misconception",
+    "hook": "Data augmentation is not just for small datasets",
+    "insight": "Even with millions of images, augmentation (CutMix, MixUp, RandAugment) consistently improves generalization. It is a regularization technique, not just a data scarcity workaround.",
+    "why_it_matters": "Skipping augmentation because you have enough data leaves performance on the table. Strong augmentation is standard practice even at Google scale."
+  },
+  {
+    "domain": "ai",
+    "topic": "computer-vision",
+    "type": "expert_heuristic",
+    "hook": "Freeze the backbone first, then unfreeze gradually",
+    "insight": "When fine-tuning a pretrained vision model, start with the backbone frozen and only train the head. Then progressively unfreeze layers. This prevents catastrophic forgetting and stabilizes training.",
+    "why_it_matters": "Blindly fine-tuning all layers from step one often destabilizes training on small target datasets. Progressive unfreezing is the reliable default."
+  },
+  {
+    "domain": "ai",
+    "topic": "computer-vision",
+    "type": "underrated_concept",
+    "hook": "Self-supervised pretraining changed everything \u2014 quietly",
+    "insight": "DINO, CLIP, and SAM proved that self-supervised vision models learn representations that transfer better than supervised ImageNet pretraining. The label-free paradigm is now the default for serious vision work.",
+    "why_it_matters": "If you are still fine-tuning from ImageNet-supervised checkpoints, you are leaving transfer performance on the table. Self-supervised foundations are the new starting point."
+  },
+  {
+    "domain": "ai",
+    "topic": "reinforcement-learning",
+    "type": "counterintuitive_truth",
+    "hook": "Reward is not the optimization target",
+    "insight": "In RL, the agent does not optimize the reward directly \u2014 it optimizes the value function, which estimates future cumulative reward. Confusing the two leads to misdesigned reward shaping and unexpected behaviors.",
+    "why_it_matters": "Poor reward shaping from confusing signal with target creates reward hacking. Understanding the value-reward distinction is foundational to designing RL systems that actually work."
+  },
+  {
+    "domain": "ai",
+    "topic": "reinforcement-learning",
+    "type": "surprising_fact",
+    "hook": "Random search often beats hyperparameter optimization in RL",
+    "insight": "RL is so noisy that even Bayesian optimization struggles. Random search with multiple seeds per config often finds better hyperparameters than structured search, because variance between runs dominates the signal.",
+    "why_it_matters": "Do not overspend on fancy HPO for RL. Run more seeds with simpler search \u2014 variance between runs is usually the bigger factor than hyperparameter choice."
+  },
+  {
+    "domain": "ai",
+    "topic": "reinforcement-learning",
+    "type": "misconception",
+    "hook": "RL is not just for games anymore",
+    "insight": "RL is widely used in real systems: data center cooling (Google), chip floorplanning (AlphaChip), ad bidding, inventory management, and LLM alignment (RLHF). The RL-only-works-in-games narrative is outdated.",
+    "why_it_matters": "Dismissing RL as impractical means missing real applications where sequential decision-making under uncertainty is the core problem."
+  },
+  {
+    "domain": "ai",
+    "topic": "reinforcement-learning",
+    "type": "expert_heuristic",
+    "hook": "Start with behavioral cloning, add RL later",
+    "insight": "The fastest path to a working RL policy is to first train with supervised behavioral cloning on expert data, then fine-tune with RL. Pure RL from scratch is slow, unstable, and often unnecessary.",
+    "why_it_matters": "Skipping the imitation learning bootstrap wastes compute and debugging time. BC to RL fine-tuning converges faster and more reliably."
+  },
+  {
+    "domain": "ai",
+    "topic": "reinforcement-learning",
+    "type": "underrated_concept",
+    "hook": "Offline RL is the quiet revolution",
+    "insight": "Offline RL learns policies from fixed datasets without environment interaction. It makes RL practical where online exploration is expensive or dangerous \u2014 healthcare, robotics, autonomous driving.",
+    "why_it_matters": "If you have logged data but cannot afford to run an agent in the real world, offline RL gives you a policy improvement path without the risks of online exploration."
+  },
+  {
+    "domain": "data",
+    "topic": "sql",
+    "type": "counterintuitive_truth",
+    "hook": "More indexes can make your database slower",
+    "insight": "Every index speeds up reads but slows down writes and consumes memory. Over-indexing is a common anti-pattern \u2014 the optimizer may even choose the wrong index, causing worse plans than a full table scan.",
+    "why_it_matters": "Blindly adding indexes just in case degrades write throughput and can confuse the query planner. Index strategically based on actual query patterns."
+  },
+  {
+    "domain": "data",
+    "topic": "sql",
+    "type": "surprising_fact",
+    "hook": "NULL != NULL in SQL \u2014 and it matters",
+    "insight": "In SQL, NULL is not a value \u2014 it is an unknown state. NULL = NULL evaluates to NULL (falsy), and NULL NOT IN (...) returns no rows. This trips up even experienced developers in WHERE clauses and JOINs.",
+    "why_it_matters": "Misunderstanding NULL semantics causes silent bugs in queries, especially in filtering, joins, and NOT IN subqueries. Always handle NULLs explicitly."
+  },
+  {
+    "domain": "data",
+    "topic": "sql",
+    "type": "misconception",
+    "hook": "Normalization is not about reducing redundancy \u2014 it is about anomalies",
+    "insight": "The purpose of normalization is to eliminate insertion, update, and deletion anomalies, not just to remove redundancy. Denormalizing for performance is fine, but understand which anomaly you are trading off.",
+    "why_it_matters": "Denormalizing without understanding anomalies creates data integrity bugs. A denormalized table that allows update anomalies will eventually give you inconsistent data."
+  },
+  {
+    "domain": "data",
+    "topic": "sql",
+    "type": "expert_heuristic",
+    "hook": "Window functions are your secret weapon",
+    "insight": "Window functions (OVER, PARTITION BY, ROWS BETWEEN) let you compute aggregates without collapsing rows. They replace most correlated subqueries and self-joins with cleaner, faster queries.",
+    "why_it_matters": "If you are writing self-joins or correlated subqueries for running totals, rankings, or comparisons, window functions are almost always clearer and faster."
+  },
+  {
+    "domain": "data",
+    "topic": "sql",
+    "type": "underrated_concept",
+    "hook": "Covering indexes eliminate the most expensive operation",
+    "insight": "A covering index includes all columns needed by a query, so the database never touches the heap/table. This turns random I/O (heap fetches) into sequential I/O (index-only scan), which is orders of magnitude faster.",
+    "why_it_matters": "For high-frequency queries, a covering index can be the difference between 50ms and 1ms. It is the single most impactful optimization for read-heavy workloads."
+  },
+  {
+    "domain": "data",
+    "topic": "nosql",
+    "type": "counterintuitive_truth",
+    "hook": "NoSQL databases often have stricter consistency than you think",
+    "insight": "MongoDB and DynamoDB offer strong consistency options. The eventually consistent default is configurable. Many NoSQL systems now support transactions, ACID guarantees, and multi-document consistency.",
+    "why_it_matters": "Rejecting NoSQL for consistency concerns is outdated. Modern NoSQL databases let you choose consistency levels per operation, giving you flexibility relational DBs cannot match."
+  },
+  {
+    "domain": "data",
+    "topic": "nosql",
+    "type": "surprising_fact",
+    "hook": "Document DBs often model relations worse than relational DBs",
+    "insight": "Embedding documents avoids joins but creates update anomalies. Referencing documents requires application-level joins. The no-joins advantage evaporates when your data has genuine relationships.",
+    "why_it_matters": "If your data is deeply relational, NoSQL adds complexity without real benefit. The right tool depends on your access patterns, not on fashion."
+  },
+  {
+    "domain": "data",
+    "topic": "nosql",
+    "type": "misconception",
+    "hook": "NoSQL does not mean no schema \u2014 it means schema-on-read",
+    "insight": "NoSQL databases shift schema enforcement from write-time to read-time. The data still has structure, but the database does not enforce it. This is a tradeoff, not an elimination of schema.",
+    "why_it_matters": "Treating NoSQL as schemaless leads to data quality decay. You still need schema validation \u2014 it just moves to the application layer."
+  },
+  {
+    "domain": "data",
+    "topic": "nosql",
+    "type": "expert_heuristic",
+    "hook": "Design your access patterns before choosing your database",
+    "insight": "In NoSQL, you model data around how it is accessed, not how it is stored. Start with your query patterns and denormalize accordingly. If you have more than a few access patterns per entity, consider relational.",
+    "why_it_matters": "Data modeling in NoSQL is query-driven. If you model entity-first (like ER diagrams), you will fight the database. Access pattern-first design is the NoSQL-native approach."
+  },
+  {
+    "domain": "data",
+    "topic": "nosql",
+    "type": "underrated_concept",
+    "hook": "TTL indexes are the silent cleanup crew",
+    "insight": "MongoDB and Redis support TTL (time-to-live) on documents/keys that automatically expire and delete data. This eliminates the need for cron-based cleanup jobs for session data, logs, and cache entries.",
+    "why_it_matters": "Manual cleanup scripts are fragile and easy to forget. TTL indexes handle data expiration at the database level \u2014 simpler, more reliable, and more efficient than application-level garbage collection."
+  },
+  {
+    "domain": "data",
+    "topic": "data-engineering",
+    "type": "counterintuitive_truth",
+    "hook": "Real-time is not always better than batch",
+    "insight": "Real-time pipelines are more expensive, more complex, and harder to debug than batch. Many business decisions happen on daily or hourly cadences \u2014 forcing real-time everywhere adds complexity without proportional value.",
+    "why_it_matters": "Default to batch unless real-time is genuinely needed. The cost difference is 5-10x. Only go streaming when the business case demands it."
+  },
+  {
+    "domain": "data",
+    "topic": "data-engineering",
+    "type": "surprising_fact",
+    "hook": "Data engineers spend 80% of their time on data quality, not pipelines",
+    "insight": "The actual pipeline code is the easy part. Most data engineering effort goes to handling schema changes, bad data, missing values, upstream breakage, and reconciliation. Pipeline code is 20% of the job.",
+    "why_it_matters": "Hiring for pipeline skills alone misses the point. Data engineering is fundamentally about managing uncertainty and change \u2014 the pipeline is just the conduit."
+  },
+  {
+    "domain": "data",
+    "topic": "data-engineering",
+    "type": "misconception",
+    "hook": "ETL is not dead \u2014 it just got renamed",
+    "insight": "ELT did not replace ETL; it moved the transformation to a different compute layer. The concepts are identical: extract, transform, load. Modern ELT is still ETL with the T running in a data warehouse instead of a separate server.",
+    "why_it_matters": "Do not get distracted by terminology debates. The engineering problem is the same \u2014 focus on data quality, idempotency, and observability regardless of where the transform runs."
+  },
+  {
+    "domain": "data",
+    "topic": "data-engineering",
+    "type": "expert_heuristic",
+    "hook": "Make every pipeline idempotent or suffer the consequences",
+    "insight": "If re-running your pipeline produces different results, you have a bug. Every pipeline should be idempotent \u2014 same input, same output, regardless of how many times it runs. This makes retries safe and backfills painless.",
+    "why_it_matters": "Non-idempotent pipelines create data duplication, incorrect aggregations, and unrecoverable states. Idempotency is not optional \u2014 it is the foundation of reliable data infrastructure."
+  },
+  {
+    "domain": "data",
+    "topic": "data-engineering",
+    "type": "underrated_concept",
+    "hook": "Data contracts are the API for your data team",
+    "insight": "A data contract is a formal agreement between data producers and consumers about schema, semantics, and quality guarantees. It prevents the schema-changed-upstream-and-broke-our-dashboard problem.",
+    "why_it_matters": "Without data contracts, upstream teams change schemas freely and downstream breaks silently. Contracts make schema changes a negotiation, not a surprise \u2014 the same lesson API design learned years ago."
+  },
+  {
+    "domain": "data",
+    "topic": "distributed-data",
+    "type": "counterintuitive_truth",
+    "hook": "Strong consistency does not mean slow \u2014 and eventual does not mean fast",
+    "insight": "Consistency and latency are not a simple tradeoff. CockroachDB and Spanner prove strong consistency with low latency is possible. Meanwhile, eventually consistent systems can have high latency due to coordinator overhead.",
+    "why_it_matters": "Do not assume eventual consistency buys you latency. Modern strongly consistent databases use clever clocks and protocols to minimize cross-region coordination."
+  },
+  {
+    "domain": "data",
+    "topic": "distributed-data",
+    "type": "surprising_fact",
+    "hook": "Split-brain is still possible in most highly available databases",
+    "insight": "Most distributed databases have edge cases where network partitions can cause split-brain: two partitions both believe they are the leader. Even systems with quorum-based leader election can hit this during specific failure modes.",
+    "why_it_matters": "HA guarantees have gaps. Understanding the exact failure modes of your database consensus protocol is essential for designing systems that do not silently corrupt data."
+  },
+  {
+    "domain": "data",
+    "topic": "distributed-data",
+    "type": "misconception",
+    "hook": "Replication factor 3 does not mean you can lose 2 nodes",
+    "insight": "With replication factor 3 and quorum-based consistency, you can only tolerate 1 failure. If 2 of 3 replicas go down, you lose quorum and the cluster becomes unavailable for writes \u2014 even though data exists on the survivor.",
+    "why_it_matters": "Overestimating fault tolerance leads to underprovisioning. If you need to survive 2 failures, you need replication factor 5, not 3."
+  },
+  {
+    "domain": "data",
+    "topic": "distributed-data",
+    "type": "expert_heuristic",
+    "hook": "Model your data based on CAP, not wishful thinking",
+    "insight": "During a partition, you must choose: availability (serve stale data) or consistency (refuse writes). There is no third option. Design your system to handle the partition case explicitly rather than hoping it will not happen.",
+    "why_it_matters": "Systems that do not explicitly handle partitions behave unpredictably when they occur. Making the choice explicit in your architecture is the difference between controlled degradation and outage."
+  },
+  {
+    "domain": "data",
+    "topic": "distributed-data",
+    "type": "underrated_concept",
+    "hook": "Vector clocks are the unsung heroes of distributed writes",
+    "insight": "Vector clocks track causality across distributed nodes without central coordination. They enable conflict detection and resolution for concurrent writes, making eventually consistent systems predictable.",
+    "why_it_matters": "Without causality tracking, concurrent writes create ambiguous state. Vector clocks (or their modern variants like hybrid logical clocks) make distributed data conflicts debuggable and resolvable."
+  },
+  {
+    "domain": "software",
+    "topic": "distributed-systems",
+    "type": "counterintuitive_truth",
+    "hook": "Retries can make outages worse",
+    "insight": "During a partial outage, automatic retries amplify load on the struggling service, potentially pushing it from degraded to dead. Retry storms are a leading cause of cascading failures in microservice architectures.",
+    "why_it_matters": "Always use exponential backoff with jitter for retries, and implement circuit breakers. Uncontrolled retries turn partial failures into total failures."
+  },
+  {
+    "domain": "software",
+    "topic": "distributed-systems",
+    "type": "surprising_fact",
+    "hook": "Network partitions happen more than you think",
+    "insight": "Production networks experience partitions more frequently than most engineers assume. Cloud provider SLAs, misconfigured security groups, DNS failures, and TCP timeouts all manifest as partitions.",
+    "why_it_matters": "If your system assumes reliable networking, it will fail. Design for partitions as a normal operational condition, not an edge case."
+  },
+  {
+    "domain": "software",
+    "topic": "distributed-systems",
+    "type": "misconception",
+    "hook": "Idempotency is not the same as retry safety",
+    "insight": "A retry-safe operation can be retried without harm. An idempotent operation returns the same result regardless of how many times it is called. These overlap but are not identical \u2014 an operation can be idempotent but not safe to retry (e.g., it triggers side effects).",
+    "why_it_matters": "Conflating the two leads to subtle bugs in payment systems, messaging, and state machines. Explicitly design for both properties independently."
+  },
+  {
+    "domain": "software",
+    "topic": "distributed-systems",
+    "type": "expert_heuristic",
+    "hook": "Use the outbox pattern for reliable dual writes",
+    "insight": "When you need to update a database AND send a message, write both to the database (the message goes to an outbox table). A separate process reads the outbox and sends messages. This guarantees at-least-once delivery without distributed transactions.",
+    "why_it_matters": "Dual writes without the outbox pattern lead to lost messages and inconsistent state. It is the simplest pattern that gives you exactly-once semantics without 2PC or XA."
+  },
+  {
+    "domain": "software",
+    "topic": "distributed-systems",
+    "type": "underrated_concept",
+    "hook": "Lease-based leadership beats heartbeat-based leadership",
+    "insight": "Heartbeat-based leader election fails during GC pauses or network hiccups \u2014 two leaders can coexist briefly. Lease-based election (with a time-bound lease) ensures at most one leader at any point, even during pauses.",
+    "why_it_matters": "If your system needs strong leader guarantees (databases, coordination), leases prevent split-brain that heartbeats allow. The small latency cost is worth the correctness guarantee."
+  },
+  {
+    "domain": "software",
+    "topic": "networking",
+    "type": "counterintuitive_truth",
+    "hook": "TCP_NODELAY can make your app slower",
+    "insight": "Disabling Nagle algorithm (TCP_NODELAY) reduces latency for individual small packets but can increase total packet count and congestion. For high-throughput workloads, the batching from Nagle algorithm actually helps.",
+    "why_it_matters": "Blindly setting TCP_NODELAY for low latency can increase congestion and packet loss, paradoxically increasing latency under load. Profile before tuning."
+  },
+  {
+    "domain": "software",
+    "topic": "networking",
+    "type": "surprising_fact",
+    "hook": "DNS TTLs are suggestions, not guarantees",
+    "insight": "Many DNS resolvers ignore or cap TTLs. A 60-second TTL might cache for hours on some ISP resolvers. This makes DNS-based failover unreliable for time-critical switchover.",
+    "why_it_matters": "Do not rely on low DNS TTLs for failover. Use health checks, load balancers, and anycast for fast failover \u2014 DNS is too unpredictable to be your only mechanism."
+  },
+  {
+    "domain": "software",
+    "topic": "networking",
+    "type": "misconception",
+    "hook": "HTTP/2 does not eliminate head-of-line blocking",
+    "insight": "HTTP/2 multiplexes streams over one TCP connection, but if a TCP packet is lost, ALL streams stall (TCP-level HOL blocking). HTTP/3 uses QUIC over UDP to solve this \u2014 each stream is independent at the transport level.",
+    "why_it_matters": "HTTP/2 over lossy networks (mobile, congested) can be worse than HTTP/1.1 with multiple connections. HTTP/3 independent streams are the real fix for HOL blocking."
+  },
+  {
+    "domain": "software",
+    "topic": "networking",
+    "type": "expert_heuristic",
+    "hook": "Always set connection timeouts and read timeouts",
+    "insight": "The default network timeouts are often infinite or very long (30s+). Set explicit connection timeouts (1-5s) and read timeouts based on your SLA. Unbounded waits consume threads and resources silently.",
+    "why_it_matters": "Missing timeouts are the number one cause of cascading failures in service-oriented architectures. Every outbound call must have a deadline."
+  },
+  {
+    "domain": "software",
+    "topic": "networking",
+    "type": "underrated_concept",
+    "hook": "Connection pooling is free performance",
+    "insight": "TCP connection establishment (3-way handshake + TLS) costs 1-3 round trips. Connection pooling reuses existing connections, eliminating this overhead for repeated calls to the same service.",
+    "why_it_matters": "For high-throughput services, connection pooling can reduce p99 latency by 50%+ and CPU usage significantly. Not using it is leaving free performance on the table."
+  },
+  {
+    "domain": "software",
+    "topic": "os",
+    "type": "counterintuitive_truth",
+    "hook": "More threads can make your program slower",
+    "insight": "Thread overhead (context switches, cache thrashing, lock contention) means adding threads beyond your core count often degrades throughput. Amdahl law and lock contention create a ceiling that more threads cannot break.",
+    "why_it_matters": "Throwing threads at a slow program is a common anti-pattern. Profile first \u2014 the bottleneck is usually I/O, lock contention, or single-threaded code, not lack of threads."
+  },
+  {
+    "domain": "software",
+    "topic": "os",
+    "type": "surprising_fact",
+    "hook": "Page cache is doing more work than you realize",
+    "insight": "The OS page cache holds recently accessed file data in RAM. Most file reads never hit disk \u2014 they come from the page cache. This is why free memory on Linux shows as buff/cache, not actually free.",
+    "why_it_matters": "Understanding page cache explains why the same query runs fast the second time. Tuning cache behavior (readahead, sync modes) can dramatically improve I/O-heavy workloads."
+  },
+  {
+    "domain": "software",
+    "topic": "os",
+    "type": "misconception",
+    "hook": "Swapping is not always bad \u2014 but swap is",
+    "insight": "Anonymous page swap-out under memory pressure is a normal OS behavior that frees RAM for more useful pages. The problem is thrashing \u2014 constant swap-in/swap-out \u2014 not swapping itself. Some swap is healthy.",
+    "why_it_matters": "Disabling swap entirely means the OOM killer fires sooner under memory pressure. A small swap gives the OS room to reclaim unused pages gracefully instead of killing processes."
+  },
+  {
+    "domain": "software",
+    "topic": "os",
+    "type": "expert_heuristic",
+    "hook": "Use io_uring for high-throughput I/O, not epoll",
+    "insight": "io_uring eliminates system call overhead for I/O by using shared ring buffers between kernel and userspace. For high IOPS workloads (databases, storage), io_uring outperforms epoll by 20-40%.",
+    "why_it_matters": "If you are building high-throughput I/O systems and still using epoll, you are leaving significant performance on the table. io_uring is the modern Linux async I/O interface."
+  },
+  {
+    "domain": "software",
+    "topic": "os",
+    "type": "underrated_concept",
+    "hook": "Copy-on-write makes fork() nearly free for reads",
+    "insight": "When a process forks, Linux does not copy memory pages \u2014 it marks them read-only and shares them. Only when a page is modified does the kernel create a copy. This makes fork() O(1) for read-heavy workloads.",
+    "why_it_matters": "Understanding COW explains why prefork server models (PostgreSQL, Redis, old Apache) work well. It also explains why large shared writes after fork() suddenly get slow \u2014 the pages must actually copy."
+  },
+  {
+    "domain": "software",
+    "topic": "system-design",
+    "type": "counterintuitive_truth",
+    "hook": "Caching is the hardest easy thing in system design",
+    "insight": "Adding a cache is easy. Cache invalidation, consistency, and eviction are among the hardest problems in distributed systems. There are only two hard things in CS: cache invalidation and naming things.",
+    "why_it_matters": "A cache with wrong invalidation serves stale data silently. A cache with wrong eviction thrashes. Design your cache strategy (TTL, write-through, write-behind) based on your consistency requirements, not convenience."
+  },
+  {
+    "domain": "software",
+    "topic": "system-design",
+    "type": "surprising_fact",
+    "hook": "Most outages are caused by deployments, not hardware",
+    "insight": "Google, Amazon, and Meta all report that the majority of outages come from code pushes, not infrastructure failures. Bad configs, schema migrations, and feature flags are the top culprits.",
+    "why_it_matters": "Invest in deployment safety (canaries, rollbacks, feature flags) over hardware redundancy. The biggest risk is the change you just made, not the server that might fail."
+  },
+  {
+    "domain": "software",
+    "topic": "system-design",
+    "type": "misconception",
+    "hook": "Microservices do not solve monolith problems \u2014 they relocate them",
+    "insight": "Moving from monolith to microservices trades in-process calls for network calls, shared state for distributed state, and deployment coupling for coordination overhead. The problems move, they do not disappear.",
+    "why_it_matters": "Adopt microservices for team scaling and independent deployment, not to fix architectural mess. A badly designed monolith becomes a badly designed distributed system \u2014 which is worse."
+  },
+  {
+    "domain": "software",
+    "topic": "system-design",
+    "type": "expert_heuristic",
+    "hook": "Design for the 99th percentile, not the average",
+    "insight": "Average latency tells you nothing about user experience. A system with 50ms average but 5s p99 means 1 in 100 requests has a terrible experience. Design capacity and UX around tail latency.",
+    "why_it_matters": "For user-facing systems, the p99 is what angry customers experience. Optimizing average latency while ignoring p99 leads to support tickets, churn, and outage reports."
+  },
+  {
+    "domain": "software",
+    "topic": "system-design",
+    "type": "underrated_concept",
+    "hook": "Rate limiting is a reliability feature, not just security",
+    "insight": "Rate limiting protects your system from overload whether the traffic is malicious or not. A viral event, a misconfigured client, or a retry storm can bring down an unrate-limited service faster than an attacker.",
+    "why_it_matters": "Rate limiting is not optional in production. Without it, any traffic spike \u2014 intentional or not \u2014 can take down your service. Treat rate limits as capacity planning, not just security."
+  }
+]

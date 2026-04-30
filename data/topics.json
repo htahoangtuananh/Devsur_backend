@@ -1,0 +1,74 @@
+[
+  {
+    "domain": "ai",
+    "name": "Deep Learning",
+    "slug": "deep-learning",
+    "description": "Neural networks, training techniques, and architecture insights"
+  },
+  {
+    "domain": "ai",
+    "name": "LLM Engineering",
+    "slug": "llm-engineering",
+    "description": "Large language models, prompting, fine-tuning, and deployment"
+  },
+  {
+    "domain": "ai",
+    "name": "Computer Vision",
+    "slug": "computer-vision",
+    "description": "Image understanding, object detection, and visual AI"
+  },
+  {
+    "domain": "ai",
+    "name": "Reinforcement Learning",
+    "slug": "reinforcement-learning",
+    "description": "Learning from interaction, reward signals, and decision making"
+  },
+  {
+    "domain": "data",
+    "name": "SQL & Relational DBs",
+    "slug": "sql",
+    "description": "Query optimization, indexing, and relational database internals"
+  },
+  {
+    "domain": "data",
+    "name": "NoSQL & Document DBs",
+    "slug": "nosql",
+    "description": "Document stores, key-value, columnar, and graph databases"
+  },
+  {
+    "domain": "data",
+    "name": "Data Engineering",
+    "slug": "data-engineering",
+    "description": "ETL, pipelines, streaming, and data infrastructure"
+  },
+  {
+    "domain": "data",
+    "name": "Distributed Data",
+    "slug": "distributed-data",
+    "description": "Consensus, replication, and distributed database systems"
+  },
+  {
+    "domain": "software",
+    "name": "Distributed Systems",
+    "slug": "distributed-systems",
+    "description": "Consensus, consistency, fault tolerance, and system design"
+  },
+  {
+    "domain": "software",
+    "name": "Networking & Protocols",
+    "slug": "networking",
+    "description": "TCP/IP, HTTP, DNS, and network internals"
+  },
+  {
+    "domain": "software",
+    "name": "Operating Systems",
+    "slug": "os",
+    "description": "Processes, memory, filesystems, and kernel insights"
+  },
+  {
+    "domain": "software",
+    "name": "System Design",
+    "slug": "system-design",
+    "description": "Architecture patterns, scalability, and design trade-offs"
+  }
+]
